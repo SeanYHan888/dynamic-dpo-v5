@@ -7,7 +7,7 @@ name = "alignment-handbook"
 version = "0.4.0.dev0"
 description = "The Alignment Handbook"
 readme = "README.md"
-requires-python = ">=3.10.9"
+requires-python = ">=3.11,<3.12"
 authors = [{ name = "The Hugging Face team (past and future)", email = "lewis@huggingface.co" }]
 license = "Apache-2.0"
 license-files = ["LICENSE"]
@@ -19,16 +19,20 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
     "accelerate>=1.9.0",
+    "bitsandbytes>=0.46.1; sys_platform == 'linux'",
     "datasets>=4.0.0",
+    "deepspeed>=0.17.2; sys_platform == 'linux'",
     "einops>=0.8.1",
     "evaluate==0.4.0",
     "huggingface-hub>=0.33.4,<1.0",
     "jinja2>=3.0.0",
+    "liger-kernel>=0.6.0; sys_platform == 'linux'",
+    "ninja>=1.11.1",
     "numpy>=1.24.2",
     "packaging>=23.0",
     "peft>=0.16.0",
@@ -37,18 +41,35 @@ dependencies = [
     "scipy",
     "sentencepiece>=0.2.0",
     "tensorboard",
-    "torch==2.6.0",
     "tqdm>=4.64.1",
     "transformers>=4.53.3",
-    "trl==0.19.1",
+    "trl>=0.19.1",
     "wandb",
 ]
 
 [project.optional-dependencies]
-train = [
-    "deepspeed>=0.17.2; sys_platform == 'linux'",
-    "flash-attn==2.7.4.post1; sys_platform == 'linux'",
-    "ninja>=1.11.1; sys_platform == 'linux'",
+tests = [
+    "parameterized>=0.9.0",
+    "pytest",
+]
+torch = [
+    "torch>=2.6.0",
+]
+quality = [
+    "black>=24.4.2",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+]
+docs = [
+    "hf-doc-builder>=0.4.0",
+]
+dev = [
+    "black>=24.4.2",
+    "flake8>=6.0.0",
+    "hf-doc-builder>=0.4.0",
+    "isort>=5.12.0",
+    "parameterized>=0.9.0",
+    "pytest",
 ]
 
 [project.urls]
@@ -56,21 +77,26 @@ Homepage = "https://github.com/huggingface/alignment-handbook"
 Repository = "https://github.com/huggingface/alignment-handbook"
 
 [dependency-groups]
-test = [
+tests = [
     "parameterized>=0.9.0",
     "pytest",
+]
+torch = [
+    "torch>=2.6.0",
+]
+linux = [
+    "flash-attn==2.7.4.post1; sys_platform == 'linux'",
 ]
 quality = [
     "black>=24.4.2",
     "flake8>=6.0.0",
-    "Flake8-pyproject>=1.2.3",
     "isort>=5.12.0",
 ]
 docs = [
     "hf-doc-builder>=0.4.0",
 ]
 dev = [
-    { include-group = "test" },
+    { include-group = "tests" },
     { include-group = "quality" },
     { include-group = "docs" },
 ]

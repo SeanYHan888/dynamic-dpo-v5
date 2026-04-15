@@ -70,10 +70,14 @@ uv venv handbook --python 3.11 && source handbook/bin/activate && uv pip install
 > [!TIP]
 > To install `uv`, follow the [UV Installation Guide](https://docs.astral.sh/uv/getting-started/installation/).
 
-Next, install PyTorch `v2.6.0` 
+Next, install PyTorch `v2.6.0`.
 
 ```shell
+# Linux (CUDA 12.6)
 uv pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu126
+
+# macOS
+uv pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 ```
 
 Note that the precise version is important for reproducibility! Since this is hardware-dependent, we also direct you to the [PyTorch Installation Page](https://pytorch.org/get-started/locally/).
@@ -84,7 +88,7 @@ You can then install the remaining package dependencies as follows:
 uv pip install .
 ```
 
-You will also need Flash Attention 2 installed, which can be done by running:
+If you are running on Linux for training, you will also need Flash Attention 2 installed:
 
 ```shell
 uv pip install "flash-attn==2.7.4.post1" --no-build-isolation
